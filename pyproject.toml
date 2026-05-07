@@ -13,9 +13,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "GPL-3.0-or-later"
 keywords = []
-authors = [
-  { name = "Asep5K", email = "asep5k@noreply.codeberg.org" },
-]
+authors = [{ name = "asepsukasusunirvatia", email = "asepdev.git@gmail.com" }]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
@@ -28,19 +26,15 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
-dependencies = [
-  "yt-dlp[default]>=2025.12.08",
-]
+dependencies = ["yt-dlp[default]>=2025.12.08"]
 
 [project.urls]
-Documentation = "https://codeberg.org/Asep5K/yt-dlp-animepahe/src/branch/main/README.md"
-Issues = "https://codeberg.org/Asep5K/yt-dlp-animepahe/issues"
-Source = "https://codeberg.org/Asep5K/yt-dlp-animepahe"
+Documentation = "https://github.com/asepsukasusunirvatia/yt-dlp-animepahe/blob/main/README.md"
+Issues = "https://github.com/asepsukasusunirvatia/yt-dlp-animepahe/issues"
+Source = "https://github.com/asepsukasusunirvatia/yt-dlp-animepahe"
 
 [project.optional-dependencies]
-static-analysis = [
-    "ruff>=0.15.0",
-]
+static-analysis = ["ruff>=0.15.0"]
 
 [tool.hatch.version]
 path = "yt_dlp_plugins/extractor/animepahe/animepahe.py"
@@ -49,7 +43,7 @@ pattern = "__version__ = '(?P<version>[^']+)'"
 [tool.hatch.envs.hatch-static-analysis]
 detached = true
 features = ["static-analysis"]
-dependencies = []  # override hatch ruff version
+dependencies = []              # override hatch ruff version
 config-path = "pyproject.toml"
 
 [tool.hatch.envs.hatch-static-analysis.scripts]
