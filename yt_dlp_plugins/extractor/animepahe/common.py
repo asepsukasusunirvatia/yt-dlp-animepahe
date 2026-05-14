@@ -53,23 +53,29 @@ class AnimepaheBaseIE(InfoExtractor):
 
     def _yield_formats(self, content: str) -> Iterator[dict[str, str | int | dict[str, str]]]:
         for data in self._DATA_RE.finditer(content):
-            lang = data.group('lang')
-            height = data.group('height')
+            if not (url := self._get_m3u8_url(data.group('url'))):
+                continue
             yield {
-                'url': self._get_m3u8_url(data.group('url')),
-                'height': str_to_int(height),
-                'language': ISO639Utils.long2short(lang),
+                'url': url,
+                'height': str_to_int(height := data.group('height')),
+                'language': ISO639Utils.long2short(lang := data.group('lang')),
                 'format_id': f'{height}-{lang}',
                 'format_note': data.group('fnsub'),
                 'ext': 'mp4',
                 'http_headers': {'referer': 'https://kwik.cx/'},
             }
 
-    def _get_m3u8_url(self, url: str) -> str:
-        encoded_page = self._download_webpage(url, self._generic_id(url), note='Downloading encoded page')
+    def _get_m3u8_url(self, url: str) -> str | None:
+        fatal = not self.get_param('ignore_no_formats_error')
+        if (
+            encoded_page := self._download_webpage(
+                url, self._generic_id(url), note='Downloading encoded page', fatal=fatal
+            )
+        ) is False:
+            return None
         decoded_page = decode_packed_codes(encoded_page)
         return self._search_regex(
-            r'const\s*source\s*=\\\'(?P<url>[^\\]+)\\', decoded_page, name='m3u8 url', group='url'
+            r'const\s*source\s*=\\\'(?P<url>[^\\]+)\\', decoded_page, name='m3u8 url', group='url', fatal=fatal
         )
 
     def _yield_entries(
