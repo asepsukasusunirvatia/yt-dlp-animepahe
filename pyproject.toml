@@ -13,7 +13,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "GPL-3.0-or-later"
 keywords = []
-authors = [{ name = "asepsukasusunirvatia", email = "asepdev.git@gmail.com" }]
+authors = [{ name = "Asep5K", email = "asepdev.git@gmail.com" }]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
@@ -29,15 +29,15 @@ classifiers = [
 dependencies = ["yt-dlp[default]>=2025.12.08"]
 
 [project.urls]
-Documentation = "https://github.com/asepsukasusunirvatia/yt-dlp-animepahe/blob/main/README.md"
-Issues = "https://github.com/asepsukasusunirvatia/yt-dlp-animepahe/issues"
-Source = "https://github.com/asepsukasusunirvatia/yt-dlp-animepahe"
+Documentation = "https://github.com/yt-dlp-plugins/yt-dlp-animepahe/blob/main/README.md"
+Issues = "https://github.com/yt-dlp-plugins/yt-dlp-animepahe/issues"
+Source = "https://github.com/yt-dlp-plugins/yt-dlp-animepahe"
 
 [project.optional-dependencies]
 static-analysis = ["ruff>=0.15.0"]
 
 [tool.hatch.version]
-path = "yt_dlp_plugins/extractor/animepahe/animepahe.py"
+path = "yt_dlp_plugins/extractor/animepahe/__init__.py"
 pattern = "__version__ = '(?P<version>[^']+)'"
 
 [tool.hatch.envs.hatch-static-analysis]

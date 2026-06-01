@@ -52,13 +52,22 @@ class AnimepaheBaseIE(InfoExtractor):
         return match.group('img') if match else None
 
     def _yield_formats(self, content: str) -> Iterator[dict[str, str | int | dict[str, str]]]:
+        lang_pref = self._configuration_arg(key='lang', default='all')
+        skipped_langs = set()
         for data in self._DATA_RE.finditer(content):
+            lang_code = ISO639Utils.long2short(lang := data.group('lang'))
+            if 'all' not in lang_pref and lang_code not in lang_pref:
+                if lang_code not in skipped_langs:
+                    self.write_debug(f'Skipping {lang_code!r}: not in preferred languages {lang_pref!r}')
+                    skipped_langs.add(lang_code)
+                continue
             if not (url := self._get_m3u8_url(data.group('url'))):
                 continue
+
             yield {
                 'url': url,
                 'height': str_to_int(height := data.group('height')),
-                'language': ISO639Utils.long2short(lang := data.group('lang')),
+                'language': lang_code,
                 'format_id': f'{height}-{lang}',
                 'format_note': data.group('fnsub'),
                 'ext': 'mp4',
